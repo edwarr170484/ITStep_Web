@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Калькулятор</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu&family=Ubuntu+Mono:wght@400;700&family=Anton&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/header.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/media.css">
+    <link rel="stylesheet" href="css/calc.css">
+    <script src="js/calc.js"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <header>
+            <a href="/" class="logotype">ITStep</a>
+            <button class="menu-toggler">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav id="menu">
+                <ul>
+                    <li><a href="/index.html">Главная</a></li>
+                    <li><a href="/projects.html" class="active">Проекты</a></li>
+                    <li><a href="/">Обо мне</a></li>
+                    <li><a href="/">Контакты</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <div class="calc-wrapper wrapper">
+                <div id="calculator">
+                    <div id="calc-result">0</div>
+                    <div id="calc-action-label"></div>
+                    <div class="calc-buttons">
+                        <button class="calc-button" onclick="calc.reset()">C</button>
+                        <button class="calc-button" onclick="calc.addToView(7)">7</button>
+                        <button class="calc-button" onclick="calc.addToView(8)">8</button>
+                        <button class="calc-button" onclick="calc.addToView(9)">9</button>
+                        <button class="calc-button rotate" onclick="calc.setOperation('mul')"><span>+</span></button>
+                        <button class="calc-button" onclick="calc.addToView(4)">4</button>
+                        <button class="calc-button" onclick="calc.addToView(5)">5</button>
+                        <button class="calc-button" onclick="calc.addToView(6)">6</button>
+                        <button class="calc-button" onclick="calc.setOperation('minus')">-</button>
+                        <button class="calc-button" onclick="calc.addToView(1)">1</button>
+                        <button class="calc-button" onclick="calc.addToView(2)">2</button>
+                        <button class="calc-button" onclick="calc.addToView(3)">3</button>
+                        <button class="calc-button" onclick="calc.setOperation('plus')">+</button>
+                        <button class="calc-button" onclick="calc.setOperation('div')">/</button>
+                        <button class="calc-button" onclick="calc.addToView(0)">0</button>
+                        <button class="calc-button" onclick="calc.addToView('.')">.</button>
+                        <button class="calc-button blue" onclick="calc.calculate()">=</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/main.js"></script>
+</body>
+
+</html>

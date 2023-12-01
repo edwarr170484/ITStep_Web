@@ -1,0 +1,117 @@
+.todo-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.todo {
+  width: 650px;
+  box-shadow: 0px 0px 8px 1px rgba(71, 62, 62, 0.75);
+  -webkit-box-shadow: 0px 0px 8px 1px rgba(71, 62, 62, 0.75);
+  -moz-box-shadow: 0px 0px 8px 1px rgba(71, 62, 62, 0.75);
+  border-radius: 8px;
+}
+
+.todo h1 {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.todo .task {
+  padding: 16px;
+  border-bottom: 1px solid var(--color-gray);
+  padding-right: 30px;
+  position: relative;
+}
+
+.todo .task button {
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  background: none;
+  color: var(--color-black);
+  line-height: 0;
+  width: 20px;
+  height: 20px;
+  transition: transform var(--effect-time) linear;
+  margin: 0;
+  padding: 0;
+}
+
+.todo .task .task-tools {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.todo .task button.task-check {
+  color: var(--color-green);
+}
+
+.todo .task button.task-remove {
+  color: var(--color-pink);
+}
+
+.todo .task button span {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 2px;
+  background: var(--color-black);
+  border-radius: 2px;
+  transform-origin: 50% 50%;
+}
+
+.todo .task button span:first-child {
+  transform: rotate(45deg);
+}
+
+.todo .task button span:last-child {
+  transform: rotate(-45deg);
+}
+
+.todo .task button:focus {
+  outline: none;
+}
+
+.todo .task:first-child {
+  border-top: 1px solid var(--color-gray);
+}
+
+.todo-form {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.todo-form input {
+  flex-grow: 1;
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+  border: 1px solid var(--color-gray);
+  height: 40px;
+  padding: 10px 14px;
+}
+
+.todo-form input:focus {
+  outline: none;
+}
+
+.todo-form button {
+  border: none;
+  border-radius: 0 5px 5px 0;
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  height: 40px;
+  padding: 10px 14px;
+}

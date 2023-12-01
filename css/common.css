@@ -1,0 +1,85 @@
+:root {
+  --color-white: #ffffff;
+  --color-black: #212529;
+  --color-blue: #0d6efd;
+  --color-gray: #dee2e6;
+  --color-green: #13795b;
+  --color-lightgreen: #0f0;
+  --color-yellow: #ffc107;
+  --color-lightgray: #f8f9fa;
+  --color-pink: #ed5959;
+  --effect-time: 0.3s;
+  --btn-border-radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: "Ubuntu", sans-serif;
+}
+
+#wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.container {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.btn {
+  background: var(--color-white);
+  border: none;
+  border-radius: var(--btn-border-radius);
+  color: var(--color-black);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  gap: 8px;
+  transition: all 0.2s linear;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.84);
+  -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.84);
+  -moz-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.84);
+}
+
+.btn-red {
+  background: var(--color-pink);
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+.btn:focus {
+  transform: scale(0.98);
+  outline: none;
+}
+
+.btn_fixed {
+  width: 50px;
+  height: 50px;
+}

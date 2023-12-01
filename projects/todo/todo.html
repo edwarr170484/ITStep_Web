@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Список задач</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu&family=Ubuntu+Mono:wght@400;700&family=Anton&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../fonts/all.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/header.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/media.css">
+    <link rel="stylesheet" href="css/todo.css">
+</head>
+
+<body>
+    <div id="wrapper">
+        <header>
+            <a href="/" class="logotype">ITStep</a>
+            <button class="menu-toggler">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav id="menu">
+                <ul>
+                    <li><a href="../../index.html">Главная</a></li>
+                    <li><a href="../../projects.html" class="active">Проекты</a></li>
+                    <li><a href="/">Обо мне</a></li>
+                    <li><a href="/">Контакты</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <div class="todo-wrapper wrapper">
+                <div class="todo">
+                    <h1>Список задач</h1>
+                    <div class="tasks">
+                        <div class="task">
+                            <span>1. Встать в 5.00</span>
+                            <div class="task-tools">
+                                <button class="task-check" title="Пометить как выполненную" onclick="checkTask(event)">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="task-remove" title="Удалить задачу" onclick="removeTask(event)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="task">
+                            <span>2. Заглянуть в план задач</span>
+                            <div class="task-tools">
+                                <button class="task-check" title="Пометить как выполненную" onclick="checkTask(event)">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="task-remove" title="Удалить задачу" onclick="removeTask(event)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="task">
+                            <span>3. Выучить Javascript</span>
+                            <div class="task-tools">
+                                <button class="task-check" title="Пометить как выполненную" onclick="checkTask(event)">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="task-remove" title="Удалить задачу" onclick="removeTask(event)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="todo-form">
+                        <input type="text" name="todo-text">
+                        <button type="button" onclick="addNewTask(event)">Добавить</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/main.js"></script>
+    <script src="js/todo.js"></script>
+</body>
+
+</html>

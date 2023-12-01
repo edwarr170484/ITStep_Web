@@ -1,0 +1,56 @@
+@media (max-width: 767.98px) {
+  .projects {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    padding-top: 110px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .projects > h1 {
+    text-align: center;
+    grid-area: 1/1/2/3;
+  }
+}
+@media (max-width: 575.98px) {
+  .buttons {
+    margin-top: 35px;
+  }
+  .btn_fixed {
+    width: 50px;
+    height: 50px;
+  }
+  .main-banner .personal {
+    font-size: 22px;
+  }
+  .personal h1 {
+    font-size: 50px;
+  }
+  .personal img {
+    max-width: 160px;
+  }
+  .personal ul {
+    margin-top: 35px;
+  }
+  .personal ul a {
+    font-size: 35px;
+  }
+
+  .projects {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .projects > h1 {
+    grid-area: 1/1/2/2;
+  }
+  .project {
+    width: 260px;
+    justify-self: center;
+  }
+}
+
+@media (max-height: 770px) {
+  .wrapper {
+    padding-top: 115px;
+    height: 100%;
+  }
+}
