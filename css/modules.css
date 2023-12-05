@@ -1,0 +1,106 @@
+.tab-navigation {
+  margin-top: 50px;
+}
+
+.tab-navigation .tab-pills {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.tab-navigation .tab-pill {
+  display: block;
+  padding: 8px 15px;
+  border: 1px solid var(--color-green);
+  color: var(--color-black);
+  transition: all var(--effect-time) ease-out;
+  border-radius: 5px;
+}
+.tab-navigation .tab-pill.active {
+  background: var(--color-green);
+  color: var(--color-white);
+  box-shadow: 0px 0px 5px 1px rgba(19, 119, 89, 0.75);
+}
+.tab-navigation .tab-pill:hover,
+.tab-navigation .tab-pill:focus {
+  background: var(--color-green);
+  color: var(--color-white);
+  box-shadow: 0px 0px 5px 1px rgba(19, 119, 89, 0.75);
+}
+.tab-navigation .tab-panes {
+  position: relative;
+}
+.tab-navigation .tab-pane {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  display: none;
+  padding-top: 30px;
+}
+.tab-navigation .tab-pane.active {
+  display: block;
+}
+
+.accordeon {
+}
+.accordeon-item {
+  border-bottom: 1px solid var(--color-gray);
+}
+.accordeon-item.active .accordeon-header a {
+  border-bottom: 1px solid var(--color-gray);
+}
+.accordeon-item.active .accordeon-header a i {
+  transform: rotate(180deg);
+}
+.accordeon-item.active .accordeon-content {
+  opacity: 1;
+  height: auto;
+  padding: 18px;
+}
+.accordeon-header h2 {
+  margin: 0;
+  padding-right: 18px;
+}
+.accordeon-header a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--color-black);
+  padding: 18px;
+  transition: all var(--effect-time) linear;
+}
+.accordeon-header a i {
+  transition: transform 0.2s linear;
+}
+.accordeon-header a:hover {
+  color: var(--color-black);
+  text-decoration: none;
+  background: var(--color-gray);
+}
+.accordeon-header a:focus {
+  color: var(--color-black);
+  text-decoration: none;
+}
+.accordeon-item .accordeon-content {
+  opacity: 0;
+  height: 0;
+}
+.accordeon-item .accordeon-content h3 {
+  margin-top: 0;
+}
+.accordeon-item .accordeon-content ol {
+  margin: 0;
+  margin-left: 32px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.accordeon-item .accordeon-content ol a {
+  color: var(--color-blue);
+}
+.accordeon-item .accordeon-content ol a:hover {
+  text-decoration: underline;
+}
