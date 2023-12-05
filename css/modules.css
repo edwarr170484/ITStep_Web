@@ -101,6 +101,16 @@
 .accordeon-item .accordeon-content ol a {
   color: var(--color-blue);
 }
+.accordeon-item .accordeon-content ol li i {
+  margin: 0 5px;
+}
 .accordeon-item .accordeon-content ol a:hover {
   text-decoration: underline;
+}
+.accordeon-item .accordeon-content ol li.completed a {
+  color: var(--color-green);
+}
+
+.accordeon-item .accordeon-content ol li.process {
+  color: var(--color-pink);
 }

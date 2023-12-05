@@ -1,0 +1,45 @@
+.tasks {
+  padding-top: 15px;
+}
+.task {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--color-gray);
+  margin-top: -1px;
+}
+.tasks .task:nth-child(odd) {
+  background-color: var(--color-bg-lightgreen);
+}
+.task-number {
+  width: 50px;
+  padding: 0 10px;
+  font-weight: 600;
+  border-right: 1px solid var(--color-gray);
+  text-align: center;
+  padding-top: 15px;
+  flex-shrink: 0;
+}
+.task-text {
+  flex-grow: 1;
+  padding-left: 30px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  padding-right: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.task-text p {
+  padding-top: 0;
+  margin-top: 0;
+}
+.task-solution {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 35px;
+  background-color: var(--color-pink);
+  color: var(--color-white);
+  border-radius: 50px;
+}

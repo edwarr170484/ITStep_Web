@@ -5,6 +5,7 @@
   --color-gray: #dee2e6;
   --color-green: #13795b;
   --color-lightgreen: #0f0;
+  --color-bg-lightgreen: #d1e7dd;
   --color-yellow: #ffc107;
   --color-lightgray: #f8f9fa;
   --color-pink: #ed5959;
@@ -43,13 +44,14 @@ body {
 }
 
 .main-wrapper {
-  padding-top: 140px;
+  padding-top: 120px;
   padding-bottom: 30px;
 }
 
 .container {
   max-width: 1320px;
   margin: 0 auto;
+  padding: 0 15px;
 }
 
 .btn {
