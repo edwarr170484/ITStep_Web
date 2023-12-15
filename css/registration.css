@@ -1,0 +1,84 @@
+main{
+    padding-top:95px;
+    display: flex;
+
+}
+.registration-form{
+    padding: 15px 30px;
+    width: 500px;
+    border-right: 1px solid gray;
+}
+
+.registration-form h2{
+    margin: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.form-group{
+    margin-bottom: 15px;
+}
+.form-group label{
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group .form-control{
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.form-group .form-control.error{
+    border-color: red !important;
+}
+.form-group .form-control:focus{
+    outline: none;
+}
+.form-group textarea.form-control{
+    height: 80px;
+}
+.error{
+    color: red;
+    font-size: 13px;
+}
+.card-list{
+    padding: 30px;
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+.card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 25px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px rgba(128, 128, 128,0.75);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(128, 128, 128,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(128, 128, 128,0.75);
+}
+.card img{
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+}
+.card .card-name{
+    font-weight: 700;
+}
+.card .card-age{
+    font-size: 13px;
+}
+.card button{
+    margin-top: 20px;
+    background-color: rgb(13, 197, 197);
+    border: none;
+    padding: 5px 15px;
+    font-weight: 700;
+    color: #ffffff;
+    cursor: pointer;
+}
