@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Move Elements</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .cards-list {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            max-width: 750px;
+            margin: 0 auto;
+            gap: 15px;
+            border: 1px solid gray;
+            padding: 15px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .card {
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 15px 15px 15px;
+            border: 1px solid gray;
+            border-radius: 5px;
+            width: 140px;
+            height: 180px;
+        }
+
+        .card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+        }
+
+        .card .card-name {
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .card .card-name a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .card .card-name a:hover,
+        .card .card-name a:focus {
+            text-decoration: none;
+            color: #000;
+        }
+
+        .card .card-age {
+            font-size: 13px;
+            color: gray;
+            text-align: center;
+        }
+
+        .card button {
+            border: none;
+            background: rgb(73, 188, 241);
+            color: #fff;
+            border-radius: 0;
+            padding: 5px 15px;
+            margin-top: auto;
+        }
+
+        .card-remove {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgb(73, 188, 241);
+            z-index: 9;
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 0 0 0 rgba(73, 188, 241, 0.7);
+        }
+
+        .card-remove.active {
+            background: rgb(73, 188, 241, 0.7);
+        }
+
+        .card-remove img {
+            width: 28px;
+        }
+
+        .card-remove.action {
+            animation: pulse 1s ease-in-out alternate 1;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.9);
+            }
+
+            70% {
+                box-shadow: 0 0 0 30px rgba(73, 188, 241, 0);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(73, 188, 241, 0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cards-list" ondragstart="cardDragStart(event)">
+        <div class="card-remove" ondragenter="cardRemoveEnter(event)" ondragover="cardRemoveEnter(event)"
+            ondrop="cardRemoveDrop(event)" ondragleave="cardRemoveLeave(event)">
+            <img src="trash.png" alt="" />
+        </div>
+    </div>
+    <script>
+        let cardsList = document.getElementsByClassName("cards-list")[0];
+        let users = [
+            { name: 'Test Testovich', age: 23 },
+            { name: 'Armen Grigiryan', age: 14 },
+            { name: 'Iavn Ivanov', age: 56 },
+            { name: 'Petr petrovich', age: 34 },
+            { name: 'Sidr Sidorovich', age: 28 }
+        ];
+
+        for (let i = 0; i < users.length; i++) {
+            cardsList.insertAdjacentHTML(
+                "beforeend",
+                `<div class="card" draggable="true" id="card${i + 1}">
+                    <img src="avatar.png" alt="" />
+                    <div class="card-name">
+                        <a href="#">${users[i].name}</a>
+                    </div>
+                    <div class="card-age">Возраст: ${users[i].age} года</div>
+                    <button type="button">Инфо</button>
+                </div>`
+            );
+        }
+
+        function getTarget(e, className) {
+            let el = e.target;
+
+            while (!el.classList.contains(className)) {
+                el = el.parentElement;
+            }
+
+            return el;
+        }
+
+        function cardDragStart(e) {
+            let el = getTarget(e, "card");
+
+            e.dataTransfer.setData("text/html", el.id);
+            e.dataTransfer.effectAllowed = "move";
+        }
+
+        function cardRemoveEnter(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = "move";
+
+            getTarget(e, "card-remove").classList.add("active");
+        }
+
+        function cardRemoveLeave(e) {
+            e.preventDefault();
+            getTarget(e, "card-remove").classList.remove("active");
+        }
+
+        function cardRemoveDrop(e) {
+            let cart = getTarget(e, "card-remove");
+
+            if (confirm("Вы действительно хотите удалить карточку?")) {
+                let elementId = e.dataTransfer.getData("text/html");
+                let el = document.getElementById(elementId);
+
+                if (el) {
+                    cart.classList.remove("active");
+                    el.remove();
+                    cart.classList.add("action");
+                    setInterval(() => { cart.classList.remove("action") }, 500);
+                }
+            } else {
+                cart.classList.remove("active");
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and drop</title>
+    <style>
+        .circle {
+            background: tomato;
+            border-radius: 50%;
+            height: 100px;
+            position: absolute;
+            top: 50px;
+            width: 100px;
+            z-index: 2;
+        }
+
+        #circle1 {
+            left: 50px;
+        }
+
+        #circle2 {
+            right: 50px;
+        }
+
+        #square {
+            background-color: tomato;
+            height: 100px;
+            width: 100px;
+            transform: rotate(45deg);
+            top: 50px;
+            left: 45vw;
+            position: absolute;
+        }
+
+        .combo {
+            background: khaki;
+            height: 100px;
+            width: 100px;
+            transform: rotate(45deg);
+            top: 40vh;
+            left: 45vw;
+            position: absolute;
+            z-index: 1;
+            --before-color: khaki;
+            --before-opacity: 0.7;
+            --after-color: khaki;
+            --after-opacity: 0.7;
+        }
+
+        button {
+            top: 60vh;
+            left: 50%;
+            transform: translateX(-125%);
+            position: absolute;
+        }
+
+        .combo::before,
+        .combo::after {
+            content: "";
+            border-radius: 50%;
+            height: 100px;
+            width: 100px;
+            position: absolute;
+        }
+
+        .combo::before {
+            background: var(--before-color);
+            opacity: var(--before-opacity);
+            left: -50px;
+        }
+
+        .combo::after {
+            background: var(--after-color);
+            opacity: var(--after-opacity);
+            top: -50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div ondragstart="circleDragStarts(event)">
+        <div id="circle1" class="circle" draggable="true"></div>
+        <div id="square" draggable="true"></div>
+        <div id="circle2" class="circle" draggable="true"></div>
+        <div id="heart" class="combo" ondragenter="circleDragOver(event)" ondragover="circleDragOver(event)"
+            ondrop="circleDrops(event)"></div>
+        <button onclick="window.location.reload()">Crack!</button>
+    </div>
+    <script>
+        let targetType = 'text/html';
+        function circleDragStarts(event) {
+            event.dataTransfer.setData(targetType, event.target.id);
+            event.dataTransfer.effectAllowed = 'move';
+        }
+        function circleDragOver(event) {
+            event.dataTransfer.dropEffect = 'move';
+            event.preventDefault();
+        }
+        function circleDrops(event) {
+            let elementId = event.dataTransfer.getData(targetType);
+            const circle = document.getElementById(elementId);
+            const square = document.getElementById("square");
+            const heart = document.getElementById("heart");
+
+            if (elementId == "square") {
+                heart.style.backgroundColor = "tomato";
+                square.hidden = true;
+            } else {
+                const colorProperty = elementId == 'circle1' ? '--before-color' : '--after-color';
+                const opacityProperty = elementId == 'circle1' ? '--before-opacity' : '--after-opacity';
+                heart.style.setProperty(colorProperty, 'tomato');
+                heart.style.setProperty(opacityProperty, '1');
+                circle.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>
