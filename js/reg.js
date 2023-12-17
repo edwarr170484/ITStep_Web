@@ -1,49 +1,35 @@
-function sendForm(event){
-    let error = {};
+function sendForm(event) {
+    let error = false;
 
-    let address = event.target[6].value;
+    error = validate(event.target[0], /^[А-Я][а-яА-Я\s]*[а-я]$/g, "Введите корректное имя");
+    error = validate(event.target[3], /^\+375[0-9]{9}$/g, "Введите правильный номер телефона (+375ХХХХХХХХХ)");
+    error = validate(event.target[4], /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/g, "Введите корректный адрес электронной почты");
+    error = validate(event.target[5], /^(https?:\/\/)?[0-9a-z-_]*(\.[0-9a-z-_]+)*(\.[a-z]+)+(\/[0-9a-z-_]*)*?\/?$/g, "Введите корректный адрес URL");
+    error = validate(event.target[6], /[\w\W\d\D]{10,}/, "Ваш адрес слишком короток");
 
-    if(address.length < 10){
-        error.address = "Ваш адрес слишком короток";
-        let addresField = document.getElementById("address-error");
-        addresField.innerHTML = error.address;
-        addresField.previousElementSibling.classList.add("error");
-    }else{
-        error.address = null;
-        let addresField = document.getElementById("address-error");
-        addresField.innerHTML = '';
-        addresField.previousElementSibling.classList.remove("error");
-    }
-
-    let name = event.target[0].value;
-    let nameTemplate = /^[А-Я][а-яА-Я\s]*[а-я]$/g;
-
-    if(!nameTemplate.test(name)){
-        error.name = "Введите корректное имя";
-        let nameField = document.getElementById("name-error");
-        nameField.innerHTML = error.name;
-        nameField.previousElementSibling.classList.add("error");
-    }else{
-        error.name = null;
-        let nameField = document.getElementById("name-error");
-        nameField.innerHTML = '';
-        nameField.previousElementSibling.classList.remove("error");
-    }
-
-    let phone = event.target[3].value;
-    let phoneTemplate = /^\+375[0-9]{9}$/g;
-
-    if(!phoneTemplate.test(phone)){
-        error.phone = "Введите правильный номер телефона (+375ХХХХХХХХХ)";
-        let phoneField = document.getElementById("phone-error");
-        phoneField.innerHTML = error.phone;
-        phoneField.previousElementSibling.classList.add("error");
-    }else{
-        error.name = null;
-        let phoneField = document.getElementById("name-error");
-        phoneField.innerHTML = '';
-        phoneField.previousElementSibling.classList.remove("error");
+    if (!error) {
+        //добавляем карточку пользователя в список
     }
 
     return false;
+}
+
+function validate(element, regexTemplate, errorMessage) {
+    let val = element.value;
+    let errorField = document.createElement("div");
+    errorField.classList.add("error");
+
+    if (element.nextElementSibling) {
+        element.nextElementSibling.remove();
+        element.classList.remove("error");
+    }
+
+    if (!regexTemplate.test(val)) {
+        errorField.innerText = errorMessage;
+        element.parentElement.append(errorField);
+        element.classList.add("error");
+        return false;
+    } else {
+        return true;
+    }
 }
