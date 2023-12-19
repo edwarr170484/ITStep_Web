@@ -72,7 +72,7 @@
                     </div>
                     <div class="form-group">
                         <label>Адрес</label>
-                        <textarea class="form-control" name="address" required>Минск</textarea>
+                        <textarea class="form-control" name="address" required>Минск, ул. Строителей, 1</textarea>
                         <div class="error" id="address-error"></div>
                     </div>
                     <div class="form-group">
@@ -80,13 +80,15 @@
                     </div>
                 </form>
             </div>
-            <div class="card-list">
-                <div class="card">
-                    <img src="img/student-avatar.png" alt="" />
-                    <div class="card-name">Test Tostivich</div>
-                    <div class="card-age">Возраст: 20 лет</div>
-                    <button type="button">Инфо</button>
+            <div class="group-viewport">
+                <h2>Группа 402</h2>
+                <div class="card-list">
+                    <p>Список пока пуст</p>
                 </div>
+            </div>
+            <div class="card-remove" ondragenter="drag.enter(event)" ondragover="drag.over(event)"
+                ondragleave="drag.leave(event)" ondrop="drag.drop(event)">
+                <img src="img/trash.png" alt="" />
             </div>
         </main>
     </div>
