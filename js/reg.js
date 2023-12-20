@@ -34,7 +34,7 @@ function sendForm(event) {
       let birthday = new Date(event.target[1].value);
 
       let newCard = `<div class="card" draggable="true" ondragstart="drag.start(event)" id="user-${now.getMilliseconds()}">
-                      <img src="img/student-avatar.png" alt="" />
+                      <img src="img/student-avatar.png" alt="" ondragstart="event.preventDefault()"/>
                       <div class="card-name">${event.target[0].value}</div>
                       <div class="card-age">Возраст: ${
                         now.getFullYear() - birthday.getFullYear()
