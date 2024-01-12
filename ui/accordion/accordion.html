@@ -18,67 +18,67 @@
             width: 100%;
         }
 
-        .accordion {
-            width: 700px;
+        .accordeon{
+            width:250px;
+            border:1px solid #e2e2e2;
         }
-
-        .accordion-item button {
-            width: 100%;
+        .accordeon-item button{
+            width:100%;
             text-align: left;
             border-radius: 0;
-            border: 1px solid #e2e2e2;
             padding: 8px 15px;
-            display: flex;
+            border:none;
+            display:flex;
             align-items: center;
             justify-content: space-between;
-            cursor: pointer;
-            transition: all 0.2s linear;
+            background: none;
+            border-bottom: 1px solid #e2e2e2;
         }
-
-        .accordion-item button:after {
+        .accordeon-item button:after{
             content: "\2039";
+            transform:rotate(-90deg);
+            transform-origin: center center;
+            transition:all 0.2s linear;
             font-size: 20px;
-            transform: rotate(-90deg);
-            transition: all 0.2s linear;
         }
-
-        .accordion-item button.active:after {
-            transform: rotate(90deg);
-        }
-
-        .accordion-item>div {
-            overflow: hidden;
+        .accordeon-item > div{
             height: 0;
+            overflow: hidden;
             transition: height 0.2s linear;
-            padding: 0 15px;
         }
-
-        .menu {
+        .accordeon-item > div ul{
             list-style: none;
             margin: 0;
             padding: 0;
-            padding-top: 15px;
-            padding-bottom: 15px;
         }
-
-        .menu li a {
+        .accordeon-item > div ul li a{
+            text-decoration: none;
             display: block;
             padding: 5px 10px;
-            text-decoration: none;
+            padding-left: 30px;
         }
-
-        .menu li a:hover {
+        .accordeon-item > div ul li a:hover{
             background: #e2e2e2;
+        }
+        .accordeon-item.opened > div{
+            height: auto;
+        }
+        .accordeon-item.opened button:after{
+            transform:rotate(90deg);
+        }
+        .accordeon-item button.active:after{
+            transform:rotate(90deg);
         }
     </style>
 </head>
 
 <body>
-    <div class="accordion">
-        <div class="accordion-item">
+    
+    <div class="accordeon">
+        <div class="accordeon-item opened">
             <button>Блок 1</button>
             <div>
-                <ul class="menu">
+                <ul>
                     <li><a href="">Меню 1</a></li>
                     <li><a href="">Меню 2</a></li>
                     <li><a href="">Меню 3</a></li>
@@ -87,51 +87,70 @@
                 </ul>
             </div>
         </div>
-        <div class="accordion-item">
+        <div class="accordeon-item">
             <button>Блок 2</button>
             <div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus eveniet, quisquam sunt qui pariatur
-                    consectetur temporibus odit eligendi consequuntur iste nulla adipisci molestias eos neque esse quas
-                    unde! Aliquid, perspiciatis!</p>
+                <ul>
+                    <li><a href="">Меню 1</a></li>
+                    <li><a href="">Меню 2</a></li>
+                    <li><a href="">Меню 3</a></li>
+                    <li><a href="">Меню 4</a></li>
+                    <li><a href="">Меню 5</a></li>
+                </ul>
             </div>
         </div>
-        <div class="accordion-item">
+        <div class="accordeon-item">
             <button>Блок 3</button>
             <div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus eveniet, quisquam sunt qui pariatur
-                    consectetur temporibus odit eligendi consequuntur iste nulla adipisci molestias eos neque esse quas
-                    unde! Aliquid, perspiciatis!</p>
+                <ul>
+                    <li><a href="">Меню 1</a></li>
+                    <li><a href="">Меню 2</a></li>
+                    <li><a href="">Меню 3</a></li>
+                    <li><a href="">Меню 4</a></li>
+                    <li><a href="">Меню 5</a></li>
+                </ul>
             </div>
         </div>
     </div>
-    <script>
-        const buttons = [...document.querySelectorAll(".accordion-item button")];
 
-        buttons.forEach((button) => {
-            button.addEventListener('click', (e) => {
-                e.stopPropagation();
-                buttons.forEach((button) => {
+    <script>
+        let buttons = [...document.querySelectorAll(".accordeon-item button")];
+
+        buttons.forEach(function(button) {
+            button.addEventListener("click", function(event){
+                event.stopPropagation();
+
+                buttons.forEach(function(button) {
+                    button.parentElement.classList.remove("opened");
                     button.nextElementSibling.style.height = null;
                     button.classList.remove("active");
                 });
-                let el = e.target;
-                if (el.classList.contains("active")) {
-                    el.classList.remove("active");
+
+                let el = event.target;
+                let height = el.nextElementSibling.scrollHeight;
+
+                if(el.nextElementSibling.style.height){
                     el.nextElementSibling.style.height = null;
-                } else {
-                    el.classList.add("active");
-                    el.nextElementSibling.style.height = el.nextElementSibling.scrollHeight + "px";
+                    el.classList.remove("active");
                 }
-            });
+                else{
+                    el.nextElementSibling.style.height = `${height}px`;
+                    el.classList.add("active");
+                }
+            }); 
         });
 
-        document.body.addEventListener('click', (e) => {
-            buttons.forEach((button) => {
+        document.body.addEventListener("click", function(event){
+            buttons.forEach(function(button) {
+                button.parentElement.classList.remove("opened");
                 button.nextElementSibling.style.height = null;
                 button.classList.remove("active");
             });
         });
 
+        function preventLink(event){
+            event.preventDefault();
+        }
     </script>
 </body>
 
