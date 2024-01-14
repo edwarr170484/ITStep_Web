@@ -1,3 +1,31 @@
+document.body.addEventListener("keydown", function(event){
+  if(event.keyCode == 82){
+    
+  }
+});
+
+if(window.localStorage.getItem("users"))
+{
+  let users = JSON.parse(window.localStorage.getItem("users"));
+  let cardList = document.getElementsByClassName("card-list")[0];
+
+  if(cardList){
+    if(users.length > 0){
+      cardList.innerHTML = "";
+
+      users.forEach(function(user){
+        let newCard = `<div class="card" draggable="true" ondragstart="drag.start(event)" id="${user.id}">
+                      <img src="img/student-avatar.png" alt="" ondragstart="event.preventDefault()"/>
+                      <div class="card-name">${user.name}</div>
+                      <div class="card-age">Возраст: ${user.age} лет</div>
+                      <button type="button" onclick="editUser(${user.id})">Инфо</button>
+                  </div>`;
+        cardList.insertAdjacentHTML("beforeEnd", newCard);
+      });
+    }
+  }
+}
+
 function sendForm(event) {
   let error = 0;
 
@@ -29,11 +57,13 @@ function sendForm(event) {
 
   if (error === 0) {
     let cardList = document.getElementsByClassName("card-list")[0];
+
     if (cardList) {
       let now = new Date();
       let birthday = new Date(event.target[1].value);
+      let id = Math.floor(Math.random() * 1000);
 
-      let newCard = `<div class="card" draggable="true" ondragstart="drag.start(event)" id="user-${now.getMilliseconds()}">
+      let newCard = `<div class="card" draggable="true" ondragstart="drag.start(event)" id="user-${id}">
                       <img src="img/student-avatar.png" alt="" ondragstart="event.preventDefault()"/>
                       <div class="card-name">${event.target[0].value}</div>
                       <div class="card-age">Возраст: ${
@@ -49,6 +79,29 @@ function sendForm(event) {
       } else {
         cardList.innerHTML = newCard;
       }
+
+      let user = {
+        id: id,
+        name: event.target[0].value,
+        birthday: event.target[1].value,
+        age: now.getFullYear() - birthday.getFullYear(),
+        pol: event.target[2].value,
+        phone: event.target[3].value,
+        email: event.target[4].value,
+        url: event.target[5].value,
+        address: event.target[6].value
+      }
+
+      let users = [];
+
+      if(window.localStorage.getItem("users"))
+      {
+        users = JSON.parse(window.localStorage.getItem("users"));
+      }
+
+      users.push(user);
+      
+      window.localStorage.setItem("users", JSON.stringify(users));
     }
   }
 
