@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог товаров</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-gray: #231b1b;
+            --border-radius: 5px;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .products .product {
+            border-radius: var(--border-radius);
+            box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 10px 20px 20px;
+        }
+
+        .products .product .product-foto {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .products .product .product-foto img {}
+
+        .products .product .product-name {
+            font-weight: 600;
+        }
+
+        .products .product .product-tieser {
+            font-size: 12px;
+            font-style: italic;
+            color: var(--color-gray);
+            padding: 5px 0;
+        }
+
+        .products .product .product-price {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 5px;
+            font-size: 24px;
+            color: #000;
+            font-weight: 600;
+            line-height: 52px;
+        }
+
+        .products .product .product-price span.old-price {
+            font-size: 14px;
+            color: rgb(148, 4, 4);
+            text-decoration: line-through;
+            line-height: 43px;
+        }
+
+        .products .product .product-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 15px;
+        }
+
+        .products .product .product-buttons>a {
+            text-decoration: none;
+            color: #fff;
+            border: none;
+            background: rgb(0, 136, 248);
+            font-size: 14px;
+            padding: 9px 15px;
+            width: 50%;
+            text-align: center;
+            transition: all 0.2s linear;
+        }
+
+        .products .product .product-buttons>a:first-child {
+            border-right: 1px solid #fff;
+        }
+
+        .products .product .product-buttons>a:hover {
+            background: rgb(6, 99, 175);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Каталог товаров</h1>
+        <div class="products">
+
+        </div>
+    </div>
+
+    <script>
+        let page = 0;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadContent();
+        });
+
+        window.addEventListener("scroll", function (event) {
+            const screenHeight = window.innerHeight;
+            const height = document.body.offsetHeight;
+            const scrolled = window.scrollY;
+
+            if ((scrolled + screenHeight) >= height) {
+                loadContent();
+            }
+        });
+
+        function loadContent() {
+            let xhr = new XMLHttpRequest();
+            let url = new URL("http://jey.of.by/");
+
+            if (page > 0) {
+                url.searchParams.set("page", page);
+            }
+
+            xhr.open("GET", url);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.responseType = 'json';
+            xhr.send();
+
+            xhr.onload = function () {
+                if (xhr.status != 200) {
+                    alert(`Ошибка ${xhr.status}: ${xhr.statusText}`);
+                } else {
+                    let products = xhr.response;
+                    renderProducts(products);
+                    page += 1;
+                }
+            }
+        }
+
+        async function fetchContent() {
+            let options = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            }
+
+            let products = await fetch(`http://jey.of.by/?page=${page}`, options).then(response => response.json());
+
+            renderProducts(products);
+            page += 1;
+        }
+
+        function renderProducts(products) {
+            if (products.length > 0) {
+                let productsList = document.getElementsByClassName("products")[0];
+                let productsCode = '';
+
+                products.forEach((product) => {
+                    let price = (product.prices.new > 0) ? `<span class="price">${product.prices.new} руб.</span><span class="old-price">${product.prices.old} руб.</span>` : `<span class="price">${product.prices.old} руб.</span>`;
+
+                    productsCode += `<div class="product">
+                                                <div class="product-foto">
+                                                    <img src="${product.image}" alt="${product.name}" />
+                                                </div>
+                                                <div class="product-info">
+                                                    <div class="product-name">Игровой ноутбук Lenovo IdeaPad Gaming 3 15ACH6 82K2028X</div>
+                                                    <div class="product-tieser">${product.tieser.slice(0, 90)}...</div>
+                                                    <div class="product-price">${price}</div>
+                                                    <div class="product-buttons">
+                                                        <a href="#" class="button product-details">Подробнее</a>
+                                                        <a href="#" class="button product-cart">В корзину</a>
+                                                    </div>
+                                                </div>
+                                            </div>`;
+                });
+
+                productsList.insertAdjacentHTML("beforeend", productsCode);
+                page += 1;
+            }
+        }
+
+    </script>
+</body>
+
+</html>
