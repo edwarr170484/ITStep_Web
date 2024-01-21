@@ -26,3 +26,20 @@
     object-fit: cover;
     object-position: center;
 }
+.player-dashboard{
+    position:fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid gray;
+    padding: 10px;
+}
+.player-dashboard h2{
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+.player-dashboard.left{
+    left:0;
+}
+.player-dashboard.right{
+    right: 0;
+}

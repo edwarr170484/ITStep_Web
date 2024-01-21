@@ -7,11 +7,38 @@ class Player {
 
         this.image = image;
         this.steps = 0;
+        this.stepsCounter = null;
     }
 
     move(i) {
         this.steps++;
         this.progress[i] = 1;
+        this.updateDashbord();
+    }
+
+    createDashboard(className){
+        let dashboard = document.createElement("div");
+        dashboard.classList.add("player-dashboard");
+        dashboard.classList.add(className);
+
+        let name = document.createElement("h2");
+        name.innerText = this.name;
+        dashboard.append(name);
+
+        let stepsElement = document.createElement("div");
+        let stepsLabel = document.createTextNode("Ходы:");
+        stepsElement.append(stepsLabel);
+
+        this.stepsCounter = document.createElement("span");
+        this.stepsCounter.innerText = this.steps;
+        stepsElement.append(this.stepsCounter);
+
+        dashboard.append(stepsElement);
+
+        document.body.append(dashboard);
+    }
+    updateDashbord(){
+        this.stepsCounter.innerText = this.steps;
     }
 }
 
@@ -43,7 +70,7 @@ class Game {
 
     check(player) {
         if (this.wins.includes(player.progress.join(''))) {
-            console.log(`${player.name} wins`);
+            game.finish(player);
         }
     }
 }
@@ -53,6 +80,9 @@ let player1 = new Player('Player1', 'cross.png');
 let player2 = new Player('Player2', 'circle.png');
 let currentPlayer = player1;
 let field = document.getElementById("game");
+
+player1.createDashboard("left");
+player2.createDashboard("right");
 
 game.cells.forEach((cell) => {
     let cellElement = document.createElement('div');
