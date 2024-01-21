@@ -1,0 +1,28 @@
+.cross-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-field {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+}
+
+.game-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid gray;
+    margin-left: -1px;
+    margin-top: -1px;
+}
+
+.game-cell img {
+    width: 80%;
+    object-fit: cover;
+    object-position: center;
+}
