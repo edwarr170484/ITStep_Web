@@ -8,6 +8,8 @@ class Player {
         this.image = image;
         this.steps = 0;
         this.stepsCounter = null;
+        this.winMessage = document.createElement("div");
+        this.winMessage.classList.add("game-winner");
     }
 
     move(i) {
@@ -16,7 +18,7 @@ class Player {
         this.updateDashbord();
     }
 
-    createDashboard(className){
+    createDashboard(className) {
         let dashboard = document.createElement("div");
         dashboard.classList.add("player-dashboard");
         dashboard.classList.add(className);
@@ -34,11 +36,20 @@ class Player {
         stepsElement.append(this.stepsCounter);
 
         dashboard.append(stepsElement);
+        stepsElement.after(this.winMessage);
 
         document.body.append(dashboard);
     }
-    updateDashbord(){
+    updateDashbord() {
         this.stepsCounter.innerText = this.steps;
+    }
+    winner(message) {
+        setTimeout(() => {
+            let selectedCells = [...document.getElementsByClassName(`${this.name}_selected`)];
+            selectedCells.forEach(cell => cell.classList.add("winner-cell"));
+        }, 0);
+
+        this.winMessage.innerText = message;
     }
 }
 
@@ -69,8 +80,13 @@ class Game {
     }
 
     check(player) {
-        if (this.wins.includes(player.progress.join(''))) {
-            game.finish(player);
+        return this.wins.includes(player.progress.join(''));
+    }
+    stop() {
+        let cells = [...document.getElementsByClassName("game-cell")];
+
+        if (cells) {
+            cells.forEach((cell) => { cell.onclick = null });
         }
     }
 }
@@ -88,18 +104,25 @@ game.cells.forEach((cell) => {
     let cellElement = document.createElement('div');
     cellElement.classList.add("game-cell");
 
-    cellElement.addEventListener("click", (event) => {
-        if (!event.target.classList.contains("selected") && event.target.tagName != "IMG") {
-            event.target.classList.add("selected");
-            let img = new Image();
-            img.src = 'images/' + currentPlayer.image;
-            event.target.append(img);
+    let cellClick = function (event) {
+        event.target.onclick = null;
+        event.target.classList.add(`${currentPlayer.name}_selected`);
+        let img = new Image();
+        img.src = 'img/' + currentPlayer.image;
+        event.target.append(img);
 
-            currentPlayer.move(cell.position);
-            game.check(currentPlayer);
+        currentPlayer.move(cell.position);
 
+        if (game.check(currentPlayer)) {
+            currentPlayer.winner("Вы победили!!");
+            game.stop();
+
+        } else {
             currentPlayer = currentPlayer == player1 ? player2 : player1;
         }
-    });
+    }
+
+    cellElement.onclick = cellClick;
+
     field.append(cellElement);
 });

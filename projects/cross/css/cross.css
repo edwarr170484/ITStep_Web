@@ -4,6 +4,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .game-field {
@@ -26,20 +27,64 @@
     object-fit: cover;
     object-position: center;
 }
-.player-dashboard{
-    position:fixed;
+
+.game-winner {
+    font-size: 20px;
+    color: rgb(4, 102, 4);
+    padding-top: 10px;
+}
+
+.winner-cell {
+    background: rgb(4, 102, 4);
+
+}
+
+.winner-cell img {
+    animation: scale 1s ease-in-out;
+}
+
+@keyframes scale {
+    30% {
+        transform: scale(0.85);
+    }
+
+    70% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.game-reset {
+    border: 1px solid gray;
+    background: pink;
+    border-radius: 0;
+    padding: 8px 20px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    cursor: pointer;
+
+}
+
+.player-dashboard {
+    position: fixed;
     top: 50%;
-    transform: translateY(-50%);
+    left: 50%;
     border: 1px solid gray;
     padding: 10px;
 }
-.player-dashboard h2{
+
+.player-dashboard h2 {
     margin-bottom: 8px;
     margin-top: 0;
 }
-.player-dashboard.left{
-    left:0;
+
+.player-dashboard.left {
+    transform: translate(calc(-100% - 200px), -50%);
 }
-.player-dashboard.right{
-    right: 0;
+
+.player-dashboard.right {
+    transform: translate(200px, -50%);
 }
