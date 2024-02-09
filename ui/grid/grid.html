@@ -30,12 +30,7 @@
 
 <script>
     class Cell {
-        /**
-            row - number of row where cell is
-            column - number of column where cell is
-            size - size of sell in pixels
-        */
-        constructor(row, column, size) {
+        constructor(row, column, size, context = null) {
             this.position = {
                 row: row,
                 column: column
@@ -49,111 +44,129 @@
             }
 
             this.size = size;
-
-            this.neighbors = [];
-
-            this.element = document.createElement("div");
-            this.element.classList.add("cell");
-            this.element.dataset.position = `${this.position.row}:${this.position.column}`;
+            this.context = context;
+            this.neighbors = null;
         }
 
-        getPosition() {
-            return this.position;
-        }
-
-        getCoords() {
-            return this.coords;
-        }
-
-        getHtmlElement() {
-            return this.element;
-        }
-
-        draw(context) {
-            context.lineWidth = "1";
-            context.strokeStyle = "gray";
-            context.strokeRect(this.coords.x1, this.coords.y1, this.size, this.size);
-        }
-
-        stroke(context) {
-            context.lineWidth = "1";
-            context.strokeStyle = "blue";
-            context.strokeRect(this.coords.x1, this.coords.y1, this.size, this.size);
+        draw() {
+            if(this.context){
+                this.context.lineWidth = "1";
+                this.context.strokeStyle = "gray";
+                this.context.strokeRect(this.coords.x1, this.coords.y1, this.size, this.size);
+            }
         }
 
         checkCoordinates(x, y) {
             return (x >= this.coords.x1) && (x <= this.coords.x2) && (y >= this.coords.y1) && (y <= this.coords.y2);
         }
+
+        checkPosition(row, column){
+            return this.position.row === row && this.position.column === column;
+        }
     }
 
     class Grid {
-        constructor(rows, columns) {
+        constructor(rows, columns, context = null) {
             this.cells = [];
             this.rows = rows;
             this.columns = columns;
+            this.context = context;
         }
-
-        draw(context) {
+        
+        init(){
             for (let row = 0; row < this.rows; row++) {
                 let cellsRow = [];
-
                 for (let column = 0; column < this.columns; column++) {
-                    const cell = new Cell(row, column, 50);
+                    const cell = new Cell(row, column, 50, this.context);
+                    cell.neighbors = this.defineCellNeighbors(row, column);
                     cellsRow.push(cell);
-                    cell.draw(context);
                 }
-
                 this.cells.push(cellsRow);
             }
+
+            for (let row = 0; row < this.rows; row++) {
+                for (let column = 0; column < this.columns; column++) {
+                    this.cells[row][column].neighbors = this.connectNeighbors(this.cells[row][column]);
+                }
+            }
+
+            return this;
+        }
+
+        draw() {
+            this.cells.forEach((row) => {
+                row.forEach((cell) => {
+                    cell.draw();
+                })
+            });
         }
 
         getCellByCoords(x, y) {
+            return this.getCellByParams(x, y, "Coordinates");
+        }
+
+        getCellByPosition(row, column){
+            return this.getCellByParams(row, column, "Position");
+        }
+
+        getCellByParams(p1, p2, param){
             let row = this.cells.filter((row) => {
                 let f = row.filter((cell) => {
-                    return cell.checkCoordinates(x, y);
+                    return cell[`check${param}`](p1, p2);
                 });
 
                 return f.length > 0;
             });
 
             const cell = row.length > 0 ? row[0].filter((cell) => {
-                return cell.checkCoordinates(x, y);
+                return cell[`check${param}`](p1, p2);
             }) : null;
 
             return cell ? cell[0] : null;
         }
+
+        defineCellNeighbors(row, column){
+            return [
+                (row > 0 && column > 0) ? [row - 1, column - 1] : null, 
+                (row > 0) ? [row - 1, column] : null, 
+                (row > 0 && column < this.columns - 1) ? [row - 1, column + 1] : null,
+                (column > 0) ? [row, column - 1] : null,   
+                (column < this.columns - 1) ? [row, column + 1] : null,
+                (row < this.rows - 1 && column > 0) ? [row + 1, column - 1] : null, 
+                (row < this.rows - 1) ? [row + 1, column] : null, 
+                (row < this.rows - 1 && column < this.columns - 1) ? [row + 1, column + 1] : null
+            ];
+        }
+
+        connectNeighbors(cell){
+            let newNeighbors = cell.neighbors.map((neighbor) => {
+                return neighbor ? this.getCellByPosition(neighbor[0], neighbor[1]) : null;
+            });
+
+            return newNeighbors;
+        }
     }
 
-    const grid = {
-        rows: 10,
-        columns: 10
-    }
-
-    const cells = [];
     const canvas = document.getElementById("gridContainer");
 
     if (canvas) {
         let ctx = canvas.getContext('2d');
 
-        const grid = new Grid(10, 10);
-        grid.draw(ctx);
+        const grid = new Grid(10, 10, ctx);
+        grid.init().draw();
 
         canvas.addEventListener("click", function (event) {
-            let container = {
+            let canvasCoords = {
                 x: event.target.offsetLeft,
                 y: event.target.offsetTop
             }
 
-            let mouse = {
+            let mouseCoords = {
                 x: event.clientX,
                 y: event.clientY
             }
 
-            const cell = grid.getCellByCoords(mouse.x - container.x, mouse.y - container.y);
-
-            if (cell) {
-                cell.stroke(ctx);
-            }
+            const cell = grid.getCellByCoords(mouseCoords.x - canvasCoords.x, mouseCoords.y - canvasCoords.y);
         });
     }
 
