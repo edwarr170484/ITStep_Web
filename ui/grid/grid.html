@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cells {
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas class="cells" id="gridContainer" width="500" height="500"></canvas>
+</body>
+
+<script>
+    class Cell {
+        /**
+            row - number of row where cell is
+            column - number of column where cell is
+            size - size of sell in pixels
+        */
+        constructor(row, column, size) {
+            this.position = {
+                row: row,
+                column: column
+            };
+
+            this.coords = {
+                x1: column * size,
+                y1: row * size,
+                x2: (column * size) + size,
+                y2: (row * size) + size
+            }
+
+            this.size = size;
+
+            this.neighbors = [];
+
+            this.element = document.createElement("div");
+            this.element.classList.add("cell");
+            this.element.dataset.position = `${this.position.row}:${this.position.column}`;
+        }
+
+        getPosition() {
+            return this.position;
+        }
+
+        getCoords() {
+            return this.coords;
+        }
+
+        getHtmlElement() {
+            return this.element;
+        }
+
+        draw(context) {
+            context.lineWidth = "1";
+            context.strokeStyle = "gray";
+            context.strokeRect(this.coords.x1, this.coords.y1, this.size, this.size);
+        }
+
+        stroke(context) {
+            context.lineWidth = "1";
+            context.strokeStyle = "blue";
+            context.strokeRect(this.coords.x1, this.coords.y1, this.size, this.size);
+        }
+
+        checkCoordinates(x, y) {
+            return (x >= this.coords.x1) && (x <= this.coords.x2) && (y >= this.coords.y1) && (y <= this.coords.y2);
+        }
+    }
+
+    class Grid {
+        constructor(rows, columns) {
+            this.cells = [];
+            this.rows = rows;
+            this.columns = columns;
+        }
+
+        draw(context) {
+            for (let row = 0; row < this.rows; row++) {
+                let cellsRow = [];
+
+                for (let column = 0; column < this.columns; column++) {
+                    const cell = new Cell(row, column, 50);
+                    cellsRow.push(cell);
+                    cell.draw(context);
+                }
+
+                this.cells.push(cellsRow);
+            }
+        }
+
+        getCellByCoords(x, y) {
+            let row = this.cells.filter((row) => {
+                let f = row.filter((cell) => {
+                    return cell.checkCoordinates(x, y);
+                });
+
+                return f.length > 0;
+            });
+
+            const cell = row.length > 0 ? row[0].filter((cell) => {
+                return cell.checkCoordinates(x, y);
+            }) : null;
+
+            return cell ? cell[0] : null;
+        }
+    }
+
+    const grid = {
+        rows: 10,
+        columns: 10
+    }
+
+    const cells = [];
+    const canvas = document.getElementById("gridContainer");
+
+    if (canvas) {
+        let ctx = canvas.getContext('2d');
+
+        const grid = new Grid(10, 10);
+        grid.draw(ctx);
+
+        canvas.addEventListener("click", function (event) {
+            let container = {
+                x: event.target.offsetLeft,
+                y: event.target.offsetTop
+            }
+
+            let mouse = {
+                x: event.clientX,
+                y: event.clientY
+            }
+
+            const cell = grid.getCellByCoords(mouse.x - container.x, mouse.y - container.y);
+
+            if (cell) {
+                cell.stroke(ctx);
+            }
+        });
+    }
+
+
+</script>
+
+</html>
