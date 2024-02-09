@@ -28,10 +28,13 @@ let list = {
 
         this.items.forEach(function(item){
             let li = document.createElement("li");
-            li.innerText = item.text;
-        
-            ul.append(li);
+            let a = document.createElement("a");
 
+            a.href = item.href;
+            a.innerText = item.text;
+
+            li.append(a);
+            ul.append(li);
         });
 
         document.body.prepend(ul);
@@ -39,23 +42,14 @@ let list = {
 }
 
 let texts = [
-    "Главная", 
-    "Блог", 
-    "О нас", 
-    "Контакты"
+    {text: "Главная", href: "https://mail.ru"},
+    {text: "Блог", href: "https://google.com"},
+    {text: "О нас", href: "https://ya.ru"},
+    {text: "Контакты", href: "https://microsoft.com"},
 ];
 
 texts.forEach(function(text){
-    let item = {
-        text: '',
-        setText: function(text){
-            this.text = text;
-        }
-    }
-
-    item.setText(text);
-
-    list.addItem(item);
+    list.addItem(text);
 });
 
 list.addClass("list-unstyled");

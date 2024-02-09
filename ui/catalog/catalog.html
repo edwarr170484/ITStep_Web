@@ -129,7 +129,7 @@
             loadContent();
         });
 
-        window.addEventListener("scroll", function (event) {
+        window.addEventListener("scroll", function () {
             const screenHeight = window.innerHeight;
             const height = document.body.offsetHeight;
             const scrolled = window.scrollY;
@@ -149,7 +149,6 @@
 
             xhr.open("GET", url);
             xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.responseType = 'json';
             xhr.send();
 
@@ -167,8 +166,7 @@
         async function fetchContent() {
             let options = {
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
+                    'Content-Type': 'application/json'
                 }
             }
 
@@ -203,7 +201,6 @@
                 });
 
                 productsList.insertAdjacentHTML("beforeend", productsCode);
-                page += 1;
             }
         }
 
