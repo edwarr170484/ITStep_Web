@@ -1,12 +1,17 @@
 function getCurrentTime() {
     let now = new Date();
+    let minutes = now.getMinutes();
     let seconds = now.getSeconds();
 
-    if (seconds === 0) {
-        seconds = `0${seconds}`
+    if (minutes < 10) {
+        minutes = `0${minutes}`;
     }
 
-    document.getElementById("clock-time").innerText = `${now.getHours()} : ${now.getMinutes()} : ${seconds}`;
+    if (seconds < 10) {
+        seconds = `0${seconds}`;
+    }
+
+    document.getElementById("clock-time").innerText = `${now.getHours()} : ${minutes} : ${seconds}`;
 }
 
 getCurrentTime();

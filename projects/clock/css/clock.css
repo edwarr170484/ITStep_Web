@@ -14,7 +14,7 @@
     width: 600px;
     height: 200px;
     border-radius: var(--radius);
-    border: 10px solid black;
+    border: 10px solid var(--color-black);
     position: relative;
 }
 
@@ -26,12 +26,12 @@
     transform: translateX(-50%);
     width: 200px;
     height: 30px;
-    background: black;
+    background: var(--color-black);
     content: " ";
 }
 
 .clock-display {
-    background-color: black;
+    background-color: var(--color-black);
     border: 10px solid white;
     height: 100%;
     border-radius: var(--radius);
@@ -54,7 +54,7 @@
 
 .clock-handles span {
     border-radius: 50%;
-    background-color: black;
+    background-color: var(--color-black);
     width: 60px;
     height: 60px;
 }
