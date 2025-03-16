@@ -23,19 +23,22 @@
                 <div class="game">
                     <div class="game-variants" id="mans-cards"></div>
                     <div class="game-zone">
-                        <div class="game-score"></div>
-                        <div class="game-compare">
-                            <div class="compare-places">
-                                <div class="compare-place"></div>
-                                <div class="compare-place"></div>
-                            </div>
-                        </div>
-                        <div class="game-result"></div>
+                        <div class="game-field" id="game-left"></div>
+                        <div class="game-field" id="game-right"></div>
                     </div>
                     <div class="game-variants" id="jobs-cards"></div>
                 </div>
             </div>
         </main>
+    </div>
+    <div class="modal" id="game-over">
+        <div class="modal-inner">
+            <h2>Вы молодец! <br/>Хотите поиграть еще?</h2>
+            <div class="buttons">
+                <button onclick="window.location.reload()" class="ok">Да</button>
+                <button onclick="window.location.href='../../games/games.html'" class="cancel">Нет</button>
+            </div>
+        </div>
     </div>
     <script src="../../../assets/js/main.js"></script>
     <script src="js/functions.js"></script>
