@@ -17,6 +17,10 @@ class Result {
         this.job = null;
         this.score = 0;
         this.current = null;
+
+        this.left = document.getElementById("game-left");
+        this.right = document.getElementById("game-right");
+        this.stars = document.getElementById("score");
     }
 
     getMan() {
@@ -29,45 +33,100 @@ class Result {
 
     setMan(man) {
         this.man = man;
+        
+        man.element.style.opacity = '0';
 
-        if(!this.job) {
-            man.resetEventListeners();
-            document.getElementById("game-left").append(man.element);
-        }
+        let inner = document.createElement("div");
+        inner.classList.add("game-inner");
+        inner.innerHTML = man.image;
+
+        this.left.append(inner);
     }
 
     setJob(job) {
         this.job = job;
 
-        if(!this.man) {
-            this.job.resetEventListeners();
-            document.getElementById("game-right").append(this.job.element);
-        }
+        job.element.style.opacity = '0';
+
+        let inner = document.createElement("div");
+        inner.classList.add("game-inner");
+        inner.innerHTML = job.image;
+
+        this.right.append(inner);
     }
 
     compare() {
         if(this.man && this.job) {
             if(this.man.pair.id == this.job.pair.id){
-                alert("Все верно!");
-                this.score++;
-                this.man.remove();
-                this.job.remove();
-                this.reset();
-
-                if(this.score == settings.total) {
-                    game.over();
-                }
+                this.success();
             } else {
-                alert("Выберите другой вариант");
-                this.current.back();
+                this.error();
             }
         }
+    }
+
+    success() {
+        this.score++;
+        this.show('variant-success');
+
+        setTimeout(() => {
+            this.hide('variant-success');
+            this.man.remove();
+            this.job.remove();
+            this.reset();
+
+            if(this.score == settings.total) {
+                game.over();
+            }
+
+            this.renderScore();
+        }, settings.timeout);
+    }
+
+    error() {
+        this.show('variant-error');
+
+        this.current.back();
+        this[this.current.type] = null;
+
+        let column = this.current.type == 'man' ? 'left' : 'right';
+
+        this[column].innerHTML = '';
+
+        setTimeout(() => {
+            this.hide('variant-error');
+        }, settings.timeout);
+    }
+
+    show(id) {
+        document.getElementById(id).classList.add("active");
+        document.getElementById(id).classList.add("animate__animated");
+        document.getElementById(id).classList.add("animate__bounceIn");
+    }
+
+    hide(id) {
+        document.getElementById(id).classList.remove("active");
+        document.getElementById(id).classList.remove("animate__animated");
+        document.getElementById(id).classList.remove("animate__bounceIn");
+    }
+
+    renderScore() {
+        let star = document.createElement('img');
+        star.src="img/free-icon-star-1985836.png";
+
+        star.classList.add("animate__animated");
+        star.classList.add("animate__heartBeat");
+
+        this.stars.append(star);
     }
 
     reset() {
         this.man = null;
         this.job = null;
         this.current = null;
+
+        this.left.innerHTML = '';
+        this.right.innerHTML = '';
     }
 }
 
@@ -76,7 +135,17 @@ class Element {
         this.pair = pair;
         this.image = pair[prop];
         this.type = prop;
+
         this.element = document.createElement('div');
+        this.element.classList.add('variant');
+        this.element.classList.add('animate__animated');
+        this.element.classList.add('animate__flipInY');
+        this.element.innerHTML = pair[prop];
+
+        this.parent = document.createElement('div');
+        this.parent.classList.add('game-variant');
+        this.parent.append(this.element);
+
         this.coords = [];
 
         this.initEventListeners();
@@ -97,15 +166,7 @@ class Element {
     }
     
     getDom() {
-        let dom = document.createElement('div');
-        dom.classList.add('game-variant');
-
-        this.element.classList.add('variant');
-        this.element.innerHTML = this.image;
-
-        dom.append(this.element);
-
-        return dom;
+        return this.parent;
     }
 
     initEventListeners() {
@@ -119,8 +180,7 @@ class Element {
             let shiftX = e.pageX - coords.left;
             let shiftY = e.pageY - coords.top;
 
-            this.element.style.position = 'absolute';
-            document.body.appendChild(this.element);
+            this.element.style.position = 'fixed';
 
             this.moveAt(e, shiftX, shiftY);
 
@@ -130,41 +190,46 @@ class Element {
                 this.moveAt(e, shiftX, shiftY);
             };
 
-            this.element.onmouseup = () => {
-                this.resetEventListeners();
-                game.result.current = this;
+            this.element.onmouseup = (e) => {
+                document.onmousemove = null;
+                this.element.onmouseup = null;
 
-                switch(this.type) {
-                    case 'man':
-                        if(!game.result.getMan()) {
-                            game.result.setMan(this);
-                        } else {
-                            this.back();
-                        }
-                    break;
+                if(this.inZone(e)) {
+                    game.result.current = this;
 
-                    case 'job':
-                        if(!game.result.getJob()) {
-                            game.result.setJob(this);
-                        } else {
-                            this.back();
-                        }
-                        
-                    break;
+                    switch(this.type) {
+                        case 'man':
+                            if(!game.result.getMan()) {
+                                game.result.setMan(this);
+                            } else {
+                                this.back();
+                            }
+                        break;
+
+                        case 'job':
+                            if(!game.result.getJob()) {
+                                game.result.setJob(this);
+                            } else {
+                                this.back();
+                            }
+                            
+                        break;
+                    }
+
+                    game.result.compare();
+                } else {
+                    this.back();
                 }
-
-                game.result.compare();
             };
         }
     }
 
-    resetEventListeners() {
-        document.onmousemove = null;
-        this.element.onmousedown = null;
-        this.element.onmouseup = null;
+    inZone(e) {
+        return e.clientX > game.zone.left && e.clientX < game.zone.right;
     }
 
     back() {
+        this.element.style.opacity = '1';
         this.element.style.transition = 'all 0.3s linear';
         this.element.style.left = this.coords.left + 'px';
         this.element.style.top = this.coords.top + 'px';
@@ -182,6 +247,7 @@ class Game {
         this.jobs = [];
         this.variants = [];
         this.result = new Result();
+        this.zone = null;
     }
 
     init() {
@@ -209,6 +275,8 @@ class Game {
         this.score = 0;
         this.drawCards(this.mans, document.getElementById('mans-cards'))
             .drawCards(this.jobs, document.getElementById('jobs-cards'));
+
+        this.zone = document.getElementById("game-zone").getBoundingClientRect();
     }
 
     drawCards(items, field) {

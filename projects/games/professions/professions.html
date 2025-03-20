@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Калькулятор</title>
+    <title>Игра "Угадай профессию"</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="../../../assets/css/common.css">
     <link rel="stylesheet" href="../../../assets/css/header.css">
     <link rel="stylesheet" href="../../../assets/css/main.css">
@@ -22,9 +23,16 @@
             <div class="professions-wrapper wrapper">
                 <div class="game">
                     <div class="game-variants" id="mans-cards"></div>
-                    <div class="game-zone">
+                    <div class="game-zone" id="game-zone">
                         <div class="game-field" id="game-left"></div>
                         <div class="game-field" id="game-right"></div>
+
+                        <div class="game-result" id="variant-success">
+                            <img src="img/success-icon-23187.png" alt="">
+                        </div>
+                        <div class="game-result" id="variant-error">
+                            <img src="img/close-button-png-30227.png" alt="">
+                        </div>
                     </div>
                     <div class="game-variants" id="jobs-cards"></div>
                 </div>
@@ -40,6 +48,7 @@
             </div>
         </div>
     </div>
+    <div id="score"></div>
     <script src="../../../assets/js/main.js"></script>
     <script src="js/functions.js"></script>
     <script src="js/professions.js"></script>
