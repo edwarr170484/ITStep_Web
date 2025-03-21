@@ -35,10 +35,11 @@ class Result {
         this.man = man;
         
         man.element.style.opacity = '0';
+        man.element.style.zIndex = '-1';
 
         let inner = document.createElement("div");
         inner.classList.add("game-inner");
-        inner.innerHTML = man.image;
+        inner.style.backgroundImage = `url('${man.image}')`;
 
         this.left.append(inner);
     }
@@ -47,10 +48,11 @@ class Result {
         this.job = job;
 
         job.element.style.opacity = '0';
+        job.element.style.zIndex = '-1';
 
         let inner = document.createElement("div");
         inner.classList.add("game-inner");
-        inner.innerHTML = job.image;
+        inner.style.backgroundImage = `url('${job.image}')`;
 
         this.right.append(inner);
     }
@@ -138,9 +140,7 @@ class Element {
 
         this.element = document.createElement('div');
         this.element.classList.add('variant');
-        this.element.classList.add('animate__animated');
-        this.element.classList.add('animate__flipInY');
-        this.element.innerHTML = pair[prop];
+        this.element.style.backgroundImage = `url('${pair[prop]}')`;
 
         this.parent = document.createElement('div');
         this.parent.classList.add('game-variant');
@@ -230,6 +230,7 @@ class Element {
 
     back() {
         this.element.style.opacity = '1';
+        this.element.style.zIndex = '5';
         this.element.style.transition = 'all 0.3s linear';
         this.element.style.left = this.coords.left + 'px';
         this.element.style.top = this.coords.top + 'px';
@@ -252,12 +253,12 @@ class Game {
 
     init() {
         this.pairs = [
-            new Pair(1, 1, 1),
-            new Pair(2, 2, 2),
-            new Pair(3, 3, 3),
-            new Pair(4, 4, 4),
-            new Pair(5, 5, 5),
-            new Pair(6, 6, 6)
+            new Pair(1, 'img/mans/air.png', 'img/jobs/air.png'),
+            new Pair(2, 'img/mans/art.png', 'img/jobs/art.png'),
+            new Pair(3, 'img/mans/desant.png', 'img/jobs/desant.png'),
+            new Pair(4, 'img/mans/doc.png', 'img/jobs/doc.png'),
+            new Pair(5, 'img/mans/sea.png', 'img/jobs/sea.png'),
+            new Pair(6, 'img/mans/tank.png', 'img/jobs/tank.png')
         ];
         
         this.mans = this.pairs.map((pair) => {
