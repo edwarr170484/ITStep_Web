@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Игра "Парные карточки"</title>
+    <link rel="stylesheet" href="../../../assets/css/common.css">
+    <link rel="stylesheet" href="../../../assets/css/header.css">
+    <link rel="stylesheet" href="../../../assets/css/main.css">
+    <link rel="stylesheet" href="../../../assets/css/media.css">
+    <link rel="stylesheet" href="../assets/css/modal.css">
+    <link rel="stylesheet" href="css/flip.css">
+    <link rel="stylesheet" href="css/media.css">
+</head>
+
+<body>
+    <div id="wrapper">
+        <main>
+            <div class="flip-wrapper wrapper">
+                <div class="game" id="game"></div>
+            </div>
+        </main>
+    </div>
+    <div class="modal" id="game-over">
+        <div class="modal-inner">
+            <h2>Вы молодец! <br/>Хотите поиграть еще?</h2>
+            <div class="buttons">
+                <button onclick="window.location.reload()" class="ok">Да</button>
+                <button onclick="window.location.href='../../games/games.html'" class="cancel">Нет</button>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/main.js"></script>
+    <script src="../assets/js/functions.js"></script>
+    <script src="js/flip.js"></script>
+</body>
+
+</html>
