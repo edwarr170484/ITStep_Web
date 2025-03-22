@@ -9,6 +9,7 @@
     background-color: var(--color-green);
     padding-top: 30px !important;
     padding-bottom: 30px;
+    height: 100%;
 }
 
 .game{
