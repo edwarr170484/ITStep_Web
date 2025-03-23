@@ -73,6 +73,7 @@
     font-weight: bold;
 }
 .flip-card-back img{
+    height: 85%;
     width: 85%;
-    object-fit: cover;
+    object-fit: contain;
 }
