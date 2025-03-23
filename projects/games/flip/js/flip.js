@@ -18,7 +18,7 @@ class Card {
         dom.inner.classList.add('flip-card-inner');
         dom.front.classList.add('flip-card-front');
         dom.back.classList.add('flip-card-back');
-        dom.back.innerHTML = this.image;
+        dom.back.innerHTML =`<img src="${this.image}" alt="" >`;
 
         dom.inner.append(dom.front);
         dom.inner.append(dom.back);
@@ -63,9 +63,22 @@ class Game {
     }
 
     init() {
+        let images = [
+            'img/aist.png',
+            'img/all.png',
+            'img/country.png',
+            'img/embl_gramadzyanin.png',
+            'img/flag.png',
+            'img/flower.png',
+            'img/gerb.png',
+            'img/orn.png',
+            'img/strana.png',
+            'img/zubr.png'
+        ];
+
         for(let j = 0; j < 2; j++) {
             for(let i = 1; i <= 10; i++) {
-                this.cards.push(new Card(i, i));
+                this.cards.push(new Card(i, images[i - 1]));
             }
         }
 
