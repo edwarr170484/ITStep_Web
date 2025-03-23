@@ -1,0 +1,6 @@
+@media (max-height: 770px) {
+    .wrapper {
+        padding-top: 0;
+        height: 100%;
+    }
+}
