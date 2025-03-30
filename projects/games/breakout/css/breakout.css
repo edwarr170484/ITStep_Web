@@ -1,0 +1,20 @@
+:root{
+    --color-green: #5cdb95;
+    --color-light-green: #8ee4af;
+    --color-dark-geen: #379683;
+    --color-white: #edf5e1;
+    --color-blue: #05386b;
+}
+.breakout-wrapper{
+    background-color: var(--color-green);
+    padding-top: 30px !important;
+    padding-bottom: 30px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#game{
+    background: var(--color-dark-geen);
+}

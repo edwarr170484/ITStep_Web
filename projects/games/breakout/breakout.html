@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игра "Breakout"</title>
+    <link rel="stylesheet" href="../../../assets/css/common.css">
+    <link rel="stylesheet" href="../../../assets/css/header.css">
+    <link rel="stylesheet" href="../../../assets/css/main.css">
+    <link rel="stylesheet" href="../../../assets/css/media.css">
+    <link rel="stylesheet" href="../assets/css/modal.css">
+    <link rel="stylesheet" href="css/breakout.css">
+    <link rel="stylesheet" href="css/media.css">
+</head>
+<body>
+    <div id="wrapper">
+        <main>
+            <div class="breakout-wrapper wrapper">
+                <canvas width="800px" height="600px" id="game"></canvas>
+            </div>
+        </main>
+    </div>
+    <div class="modal" id="game-over">
+        <div class="modal-inner">
+            <h2>Игра окончена! <br/>Хотите поиграть еще?</h2>
+            <div class="buttons">
+                <button onclick="window.location.reload()" class="ok">Да</button>
+                <button onclick="window.location.href='../../games/games.html'" class="cancel">Нет</button>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/main.js"></script>
+    <script src="js/breakout.js"></script>
+</body>
+</html>
