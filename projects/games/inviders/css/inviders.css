@@ -1,0 +1,27 @@
+:root{
+    --color-green: #5cdb95;
+    --color-light-green: #8ee4af;
+    --color-dark-geen: #379683;
+    --color-white: #edf5e1;
+    --color-blue: #05386b;
+    --color-black: #0e0d0d;
+}
+.inviders-wrapper{
+    background-color: var(--color-blue);
+    padding-top: 30px !important;
+    padding-bottom: 30px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#game{
+    background: var(--color-black);
+}
+
+#score{
+    font-size: 45px;
+    font-weight: bold;
+}
