@@ -16,7 +16,7 @@ class Game {
         this.racket = new Racket();
         this.isOver = false;
         this.bricks = [];
-        this.brickRows = 1;
+        this.brickRows = 4;
         this.brickColumns = 8;
         this.brickGap = 3;
         this.score = 0;
@@ -63,6 +63,7 @@ class Game {
             game.racket.draw(game.ctx);
             game.checkBallRacket();
             game.checkBallBrick();
+            game.updateScore();
 
             requestAnimationFrame(game.update);
 
@@ -94,6 +95,11 @@ class Game {
         });
     }
 
+    updateScore() {
+        let scoreBlock = document.getElementById("score");
+        scoreBlock.innerHTML = `Счет: <span>${this.score}</span>`;
+    }
+
     over() {
         this.isOver = true;
         document.getElementById("game-over").classList.add("active");
@@ -109,8 +115,8 @@ class Ball {
         this.radius = 7;
         this.x = 300;
         this.y = 300;
-        this.vx = 5;
-        this.vy = 5;
+        this.vx = 3;
+        this.vy = 3;
 
         this.direction = {
             x: this.vx,

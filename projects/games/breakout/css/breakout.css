@@ -13,8 +13,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 #game{
     background: var(--color-dark-geen);
+}
+
+#score{
+    font-size: 45px;
+    font-weight: bold;
 }
