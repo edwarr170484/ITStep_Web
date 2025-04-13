@@ -1,5 +1,6 @@
 let canvas = document.getElementById("game");
 const CTX = canvas.getContext("2d");
+let score = document.getElementById("score");
 
 console.log(canvas);
 
@@ -13,7 +14,9 @@ class Game {
         this.ship = new Ship('ship');
         this.aliens = [];
         this.bullets = [];
-        
+        this.score = 0;
+        this.totalAliens = 0;
+
         this.aliensSpeed = {
             x: 2,
             y: 9
@@ -45,6 +48,8 @@ class Game {
                 tmp.push(alien);
 
                 this.aliensBlock.right += alien.width() + 4;
+
+                this.totalAliens++;
             }
 
             y += alien.height() + 6;
@@ -85,6 +90,8 @@ class Game {
     }
 
     update() {
+        game.showScore();
+
         CTX.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 
         game.drawAliens();
@@ -141,12 +148,27 @@ class Game {
                     bullet.destroyed = true;
                     alien.destroyed = true;
 
+                    this.score++;
+
                     return alien;
                 }
             });
         });
 
         this.bullets = this.bullets.filter((bullet) => !bullet.destroyed);
+    }
+
+    showScore(){
+        score.innerText = `Ваш счет: ${this.score}`;
+
+        if(this.score >= this.totalAliens){
+            this.over();
+        }
+    }
+
+    over() {
+        this.isOver = true;
+        document.getElementById("game-over").classList.add("active");
     }
 }
 
